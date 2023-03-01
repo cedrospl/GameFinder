@@ -26,12 +26,10 @@ public class BaseTest {
             case "chrome" -> {
                 chromedriver().setup();
                 driver = new ChromeDriver();
-                driver.manage().window().maximize();
             }
             case "firefox" -> {
                 firefoxdriver().setup();
                 driver = new FirefoxDriver();
-                driver.manage().window().maximize();
             }
             case "edge" -> {
                 edgedriver().setup();
