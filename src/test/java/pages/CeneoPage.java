@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class CeneoPage {
 
@@ -56,7 +57,7 @@ public class CeneoPage {
     private List<WebElement> gameLinks;
 
     public String getCeneoWebsite() {
-        System.out.println("Opening ceneo.pl");
+        System.out.println("OPENING ceneo.pl");
         driver.get("https://ceneo.pl/gry");
         return searchButton.getText();
     }
@@ -84,11 +85,9 @@ public class CeneoPage {
             listGamePennies.add(penny.getText());
         }
         System.out.println("CENEO.PL Concatenating values with pennies from found games list");
-        List<String> listGamePrices = new ArrayList<>();
-        for (int i = 0; i < listGameValues.size() && i < listGamePennies.size(); i++) {
-            String joined = listGameValues.get(i) + listGamePennies.get(i);
-            listGamePrices.add(joined);
-        }
+        List<String> listGamePrices = IntStream.range(0, Math.min(listGameValues.size(), listGamePennies.size()))
+                .mapToObj(i -> listGameValues.get(i) + listGamePennies.get(i))
+                .toList();
         System.out.println("CENEO.PL Gathering links from found games list");
         List<WebElement> gameLinksElements = gameLinks;
         List<String> listGameLinks = new ArrayList<>();
@@ -99,7 +98,7 @@ public class CeneoPage {
         System.out.println("CENEO.PL Concatenating prices with links into one list");
         List<String> listGamePricesWithLinks = new ArrayList<>();
         for (int i = 0; i < listGamePrices.size() && i < listGameLinks.size(); i++) {
-            String joined = "Price: " + listGamePrices.get(i) + "zł --> Link: " + listGameLinks.get(i);
+            String joined = "Price: " + listGamePrices.get(i) + " zł --> Link: " + listGameLinks.get(i);
             listGamePricesWithLinks.add(joined);
             setListGamePricesWithLinks(listGamePricesWithLinks);
         }

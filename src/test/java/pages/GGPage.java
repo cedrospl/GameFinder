@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GGPage {
@@ -44,7 +45,7 @@ public class GGPage {
     private List<WebElement> gameLinks;
 
     public String getGGWebsite() {
-        System.out.println("Opening gg.deals");
+        System.out.println("OPENING gg.deals");
         driver.get("https://gg.deals");
         return sectionHeader.getText();
     }
@@ -65,7 +66,7 @@ public class GGPage {
             for (WebElement value : gamePricesElements) {
                 listGamePrices.add(value.getText().replace("~", ""));
             }
-            System.out.println(listGamePrices.size());
+            listGamePrices.removeAll(Arrays.asList("", null));
             System.out.println("GG.DEALS Gathering links from found games list");
             List<WebElement> gameLinksElements = gameLinks;
             List<String> listGameLinks = new ArrayList<>();
@@ -73,11 +74,10 @@ public class GGPage {
                 String gameLink = webElement.getAttribute("href");
                 listGameLinks.add(gameLink);
             }
-            System.out.println(listGameLinks.size());
             System.out.println("GG.DEALS Concatenating prices with links into one list");
             List<String> listGamePricesWithLinks = new ArrayList<>();
             for (int in = 0; in < listGamePrices.size() && in < listGameLinks.size(); in++) {
-                String joined = "Price: " + listGamePrices.get(in) + "zł --> Link: " + listGameLinks.get(in);
+                String joined = "Price: " + listGamePrices.get(in) + " --> Link: " + listGameLinks.get(in);
                 listGamePricesWithLinks.add(joined);
                 setFinalListGamePricesWithLinks(listGamePricesWithLinks);
             }

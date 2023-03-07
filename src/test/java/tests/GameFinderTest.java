@@ -19,7 +19,7 @@ public class GameFinderTest extends BaseTest {
     private final String maxPrice = "300";
 
     @Test
-    public void testGameFinderCeneo() {
+    public void testGameFinder() {
         CeneoPage ceneoPage = new CeneoPage(driver);
         KinguinPage kinguinPage = new KinguinPage(driver);
         GGPage ggPage = new GGPage(driver);
@@ -27,8 +27,8 @@ public class GameFinderTest extends BaseTest {
 
         Assert.assertEquals(ceneoPage.getCeneoWebsite(), "SZUKAJ");
         Assert.assertEquals(ceneoPage.getCeneoGamePricesAndLinks(searchedGame, minPrice, maxPrice), searchedGame.toLowerCase() + " - Gry");
-        Assert.assertEquals(kinguinPage.getKinguinWebsite(), "HOT STUFF");
-        Assert.assertEquals(kinguinPage.getKinguinGamePricesAndLinks(searchedGame, minPrice, maxPrice), "znalezionych wyników");
+        Assert.assertEquals(kinguinPage.getKinguinWebsite(searchedGame), "Platforma");
+        Assert.assertEquals(kinguinPage.getKinguinGamePricesAndLinks(minPrice, maxPrice), "znalezionych wyników");
         Assert.assertEquals(ggPage.getGGWebsite(), "Deals");
         Assert.assertEquals(ggPage.getGGGamePricesAndLinks(searchedGame), "Buy " + searchedGame + " PC");
 

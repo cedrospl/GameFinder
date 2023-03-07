@@ -28,9 +28,6 @@ public class KinguinPage {
 
     public List<String> finalListGamePricesWithLinks;
 
-    @FindBy(xpath = "//div[@class=\"col-lg-8\"]/div/*[1]")
-    private WebElement siteHeader;
-
     @FindBy(xpath = "//div[@class=\"sc-h0oox2-4 izlGMf\"]")
     private WebElement siteMenu;
     @FindBy(xpath = "//input[@aria-label=\"Search phrase\"]")
@@ -38,6 +35,9 @@ public class KinguinPage {
 
     @FindBy(xpath = "//h2[@class=\"sc-1j92ujr-1 iMhqqC\"]/*[2]")
     private WebElement searchHeader;
+
+    @FindBy(xpath = "//h3[@class=\"sc-1lrld4d-6 kgKLxw\"]/span[text()='Platforma']")
+    private WebElement searchText;
 
     @FindBy(xpath = "//input[@id='min']")
     private WebElement searchFilterMin;
@@ -51,16 +51,16 @@ public class KinguinPage {
     @FindBy(xpath = "//div[@class=\"sc-1oomi3j-4 hNPzBM\"]/*[1]/*[2]")
     private List<WebElement> gameLinks;
 
-    public String getKinguinWebsite() {
-        System.out.println("Opening kinguin.pl");
+    public String getKinguinWebsite(String searchedGame) {
+        System.out.println("OPENING kinguin.pl");
         driver.get("https://www.kinguin.net");
-        return siteHeader.getText();
-    }
-
-    public String getKinguinGamePricesAndLinks(String searchedGame, String minPrice, String maxPrice) {
         System.out.println("KINGUIN.NET Searching for " + searchedGame);
         searchBar.sendKeys(searchedGame);
         searchBar.sendKeys(Keys.ENTER);
+        return searchText.getText();
+    }
+
+    public String getKinguinGamePricesAndLinks(String minPrice, String maxPrice) {
         System.out.println("KINGUIN.NET Filtering found list - minimum price " + minPrice);
         searchFilterMin.sendKeys(minPrice);
         System.out.println("KINGUIN.NET Filtering found list - maximum price " + maxPrice);
@@ -81,7 +81,7 @@ public class KinguinPage {
         System.out.println("KINGUIN.NET Concatenating prices with links into one list");
         List<String> listGamePricesWithLinks = new ArrayList<>();
         for (int i = 0; i < listGamePrices.size() && i < listGameLinks.size(); i++) {
-            String joined = "Price: " + listGamePrices.get(i) + "zł --> Link: " + listGameLinks.get(i);
+            String joined = "Price: " + listGamePrices.get(i) + " --> Link: " + listGameLinks.get(i);
             listGamePricesWithLinks.add(joined);
             setFinalListGamePricesWithLinks(listGamePricesWithLinks);
         }
