@@ -73,15 +73,13 @@ public class CeneoPage {
         System.out.println("CENEO.PL Accepting filters used");
         searchFilterSubmit.click();
         System.out.println("CENEO.PL Gathering values from found games list");
-        List<WebElement> gameValuesElements = gameValues;
         List<String> listGameValues = new ArrayList<>();
-        for (WebElement value : gameValuesElements) {
+        for (WebElement value : gameValues) {
             listGameValues.add(value.getText());
         }
         System.out.println("CENEO.PL Gathering pennies from found games list");
-        List<WebElement> gamePenniesElements = gamePennies;
         List<String> listGamePennies = new ArrayList<>();
-        for (WebElement penny : gamePenniesElements) {
+        for (WebElement penny : gamePennies) {
             listGamePennies.add(penny.getText());
         }
         System.out.println("CENEO.PL Concatenating values with pennies from found games list");
@@ -89,10 +87,9 @@ public class CeneoPage {
                 .mapToObj(i -> listGameValues.get(i) + listGamePennies.get(i))
                 .toList();
         System.out.println("CENEO.PL Gathering links from found games list");
-        List<WebElement> gameLinksElements = gameLinks;
         List<String> listGameLinks = new ArrayList<>();
-        for (int i = 0; i < gameLinksElements.size(); i += 2) {
-            String gameLink = gameLinksElements.get(i).getAttribute("href");
+        for (int i = 0; i < gameLinks.size(); i += 2) {
+            String gameLink = gameLinks.get(i).getAttribute("href");
             listGameLinks.add(gameLink);
         }
         System.out.println("CENEO.PL Concatenating prices with links into one list");

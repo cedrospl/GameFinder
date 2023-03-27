@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KinguinPage {
@@ -45,10 +47,10 @@ public class KinguinPage {
     @FindBy(xpath = "//input[@id='max']")
     private WebElement searchFilterMax;
 
-    @FindBy(xpath = "//button[@class=\"sc-13kaj8j-1 kEFhfP c-product__btn\"]/div/*[3]")
+    @FindBy(xpath = "//span[@class='min']")
     private List<WebElement> gamePrices;
 
-    @FindBy(xpath = "//div[@class=\"sc-1oomi3j-4 hNPzBM\"]/*[1]/*[2]")
+    @FindBy(xpath = "//h3[@itemprop='name']/*")
     private List<WebElement> gameLinks;
 
     public String getKinguinWebsite(String searchedGame) {
@@ -66,15 +68,14 @@ public class KinguinPage {
         System.out.println("KINGUIN.NET Filtering found list - maximum price " + maxPrice);
         searchFilterMax.sendKeys(maxPrice);
         System.out.println("KINGUIN.NET Gathering prices from found games list");
-        List<WebElement> gamePricesElements = gamePrices;
+
         List<String> listGamePrices = new ArrayList<>();
-        for (WebElement value : gamePricesElements) {
+        for (WebElement value : gamePrices) {
             listGamePrices.add(value.getText());
         }
         System.out.println("KINGUIN.NET Gathering links from found games list");
-        List<WebElement> gameLinksElements = gameLinks;
         List<String> listGameLinks = new ArrayList<>();
-        for (WebElement element : gameLinksElements) {
+        for (WebElement element : gameLinks) {
             String gameLink = element.getAttribute("href");
             listGameLinks.add(gameLink);
         }

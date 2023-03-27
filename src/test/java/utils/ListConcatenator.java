@@ -5,7 +5,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ListConcatenator {
@@ -24,14 +23,11 @@ public class ListConcatenator {
         listGamePricesWithLinks.addAll(kinguin);
         listGamePricesWithLinks.addAll(gg);
 
-        Collections.sort(listGamePricesWithLinks, new Comparator<String>() {
-            @Override
-            public int compare(String s1, String s2) {
-                String pattern = "[^0-9]*([0-9]+).*";
-                Integer int1 = Integer.parseInt(s1.replaceAll(pattern, "$1"));
-                Integer int2 = Integer.parseInt(s2.replaceAll(pattern, "$1"));
-                return int1.compareTo(int2);
-            }
+        Collections.sort(listGamePricesWithLinks, (s1, s2) -> {
+            String pattern = "[^0-9]*([0-9]+).*";
+            Integer int1 = Integer.parseInt(s1.replaceAll(pattern, "$1"));
+            Integer int2 = Integer.parseInt(s2.replaceAll(pattern, "$1"));
+            return int1.compareTo(int2);
         });
 
         System.out.println("Found games with links");

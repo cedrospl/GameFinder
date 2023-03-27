@@ -2,6 +2,7 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
@@ -16,7 +17,7 @@ public class BaseTest {
     protected WebDriver driver;
 
     //TODO Field to choose which web browser to run
-    protected String selectDriver = "Chrome";
+    protected String selectDriver = "chrome";
 
     @BeforeTest
     public void setUp() {
@@ -25,7 +26,9 @@ public class BaseTest {
         switch (selectedDriver.toLowerCase()) {
             case "chrome" -> {
                 chromedriver().setup();
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--remote-allow-origins=*");
+                driver = new ChromeDriver(options);
             }
             case "firefox" -> {
                 firefoxdriver().setup();

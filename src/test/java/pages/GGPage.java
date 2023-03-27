@@ -53,35 +53,27 @@ public class GGPage {
     public String getGGGamePricesAndLinks(String searchedGame) {
         System.out.println("GG.DEALS Searching for " + searchedGame + " version");
         searchBar.sendKeys(searchedGame);
-        List<WebElement> clickFirstFoundGame = clickFirstGame;
-        {
-            int i = 0;
-            while (i < clickFirstGame.size()) {
-                clickFirstGame.get(0).click();
-                break;
-            }
-            System.out.println("GG.DEALS Gathering prices from found games list");
-            List<WebElement> gamePricesElements = gamePrices;
-            List<String> listGamePrices = new ArrayList<>();
-            for (WebElement value : gamePricesElements) {
-                listGamePrices.add(value.getText().replace("~", ""));
-            }
-            listGamePrices.removeAll(Arrays.asList("", null));
-            System.out.println("GG.DEALS Gathering links from found games list");
-            List<WebElement> gameLinksElements = gameLinks;
-            List<String> listGameLinks = new ArrayList<>();
-            for (WebElement webElement : gameLinksElements) {
-                String gameLink = webElement.getAttribute("href");
-                listGameLinks.add(gameLink);
-            }
-            System.out.println("GG.DEALS Concatenating prices with links into one list");
-            List<String> listGamePricesWithLinks = new ArrayList<>();
-            for (int in = 0; in < listGamePrices.size() && in < listGameLinks.size(); in++) {
-                String joined = "Price: " + listGamePrices.get(in) + " --> Link: " + listGameLinks.get(in);
-                listGamePricesWithLinks.add(joined);
-                setFinalListGamePricesWithLinks(listGamePricesWithLinks);
-            }
-            return searchHeader.getText();
+        clickFirstGame.get(0).click();
+
+        System.out.println("GG.DEALS Gathering prices from found games list");
+        List<String> listGamePrices = new ArrayList<>();
+        for (WebElement value : gamePrices) {
+            listGamePrices.add(value.getText().replace("~", ""));
         }
+        listGamePrices.removeAll(Arrays.asList("", null));
+        System.out.println("GG.DEALS Gathering links from found games list");
+        List<String> listGameLinks = new ArrayList<>();
+        for (WebElement webElement : gameLinks) {
+            String gameLink = webElement.getAttribute("href");
+            listGameLinks.add(gameLink);
+        }
+        System.out.println("GG.DEALS Concatenating prices with links into one list");
+        List<String> listGamePricesWithLinks = new ArrayList<>();
+        for (int in = 0; in < listGamePrices.size() && in < listGameLinks.size(); in++) {
+            String joined = "Price: " + listGamePrices.get(in) + " --> Link: " + listGameLinks.get(in);
+            listGamePricesWithLinks.add(joined);
+            setFinalListGamePricesWithLinks(listGamePricesWithLinks);
+        }
+        return searchHeader.getText();
     }
 }
